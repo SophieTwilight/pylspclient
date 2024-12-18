@@ -15,6 +15,7 @@ from .lsp_pydantic_strcuts import (
     CompletionList,
     WorkspaceEdit,
     TextEdit,
+    ReferenceContext,
 )
 
 
@@ -284,3 +285,16 @@ class LspClient(object):
             for uri, edits in response.get("changes", {}).items()
         }
         return WorkspaceEdit(changes=changes)
+
+    def references(self,
+                   text_document: TextDocumentIdentifier,
+                   position: Position,
+                   include_declaration: bool
+                   ) -> list[Location]:
+        result_dict = self.lsp_endpoint.call_method(
+            "textDocument/references",
+            textDocument=text_document,
+            position=position,
+            context=ReferenceContext(includeDeclaration=include_declaration),
+        )
+        return [Location.model_validate(result) for result in result_dict]
