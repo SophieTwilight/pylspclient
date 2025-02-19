@@ -298,3 +298,15 @@ class LspClient(object):
             context=ReferenceContext(includeDeclaration=include_declaration),
         )
         return [Location.model_validate(result) for result in result_dict]
+
+    def hover(self,
+              text_document: TextDocumentIdentifier,
+              position: Position,
+              ) -> str:
+        result = self.lsp_endpoint.call_method(
+            "textDocument/hover",
+            textDocument=text_document,
+            position=position,
+        )
+
+        return str(result)

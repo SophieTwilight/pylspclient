@@ -154,6 +154,13 @@ class TextDocumentPositionParams(BaseModel):
     textDocument: TextDocumentIdentifier
     position: Position
 
+class WorkDoneProgressParams(BaseModel):
+    """
+    An optional token that a server can use to report work done progress.
+    """
+    workDoneToken: Optional[str] = None  # Optional; used for progress reporting
+
+
 class ReferenceContext(BaseModel):
     """
     Additional information about the context of a reference request.
@@ -167,6 +174,11 @@ class ReferenceParams(TextDocumentPositionParams):
     context: ReferenceContext
     workDoneToken: Optional[str] = None  # Optional; used for progress reporting
     partialResultToken: Optional[str] = None  # Optional; used for partial results
+
+class HoverParams(TextDocumentPositionParams, WorkDoneProgressParams):
+    """
+    The hover request is sent from the client to the server to request hover information at a given text document position.
+    """
 
 class LocationLink(BaseModel):
     originSelectionRange: Optional[Range]
