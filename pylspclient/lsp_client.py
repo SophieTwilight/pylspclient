@@ -148,7 +148,7 @@ class LspClient(object):
         :param TextDocumentItem textDocument: The text document.
         """
         result_dict = self.lsp_endpoint.call_method(
-            "textDocument/documentSymbol", textDocument=textDocument.dict()
+            "textDocument/documentSymbol", textDocument=textDocument
         )
         try:
             return [DocumentSymbol.model_validate(sym) for sym in result_dict]
@@ -269,7 +269,7 @@ class LspClient(object):
         response = self.lsp_endpoint.call_method(
             "textDocument/rename",
             textDocument=text_document,
-            position=position.dict(),
+            position=position,
             newName=new_name,
         )
 
