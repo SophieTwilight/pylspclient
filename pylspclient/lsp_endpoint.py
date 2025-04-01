@@ -67,7 +67,8 @@ class LspEndpoint(threading.Thread):
                         # a call for notify
                         if method not in self.notify_callbacks:
                             # Have nothing to do with this.
-                            print("Notify method not found: {method}, {params}".format(method=method, params=params))
+                            # print("Notify method not found: {method}, {params}".format(method=method, params=params))
+                            pass
                         else:
                             self.notify_callbacks[method](params)
                 else:
