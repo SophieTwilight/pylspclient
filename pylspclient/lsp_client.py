@@ -16,6 +16,7 @@ from .lsp_pydantic_strcuts import (
     WorkspaceEdit,
     TextEdit,
     ReferenceContext,
+    Hover,
 )
 
 
@@ -302,11 +303,11 @@ class LspClient(object):
     def hover(self,
               text_document: TextDocumentIdentifier,
               position: Position,
-              ) -> str:
+              ) -> Hover:
         result = self.lsp_endpoint.call_method(
             "textDocument/hover",
             textDocument=text_document,
             position=position,
         )
 
-        return str(result)
+        return Hover.model_validate(result)

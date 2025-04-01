@@ -90,6 +90,19 @@ class Location(BaseModel):
     uri: str
     range: Range
 
+class MarkupKind(str, Enum):
+    PlainText="plaintext"
+    Markdown="markdown"
+
+class MarkupContent(BaseModel):
+    kind: MarkupKind
+    value: str
+
+class Hover(BaseModel):
+    """The result of a hover request."""
+    contents: MarkupContent
+    range: Range | None
+
 class SymbolKind(IntEnum):
     """Represents various symbol kinds like File, Module, Namespace, Package, Class, Method, etc."""
     File = 1
